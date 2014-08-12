@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+set -eo pipefail; [[ $PLUSHU_TRACE ]] && set -x
+
+hasmaster=
+
+while read oldrev newrev refname; do
+  if [[ "$refname" == "refs/heads/master" ]]; then
+    hasmaster=1
+  fi
+done
+
+if [[ -z "$hasmaster" ]]; then
+  echo "WARNING: you did not push an update to master."
+  echo "Only code pushed to master will be deployed as an app."
+fi
